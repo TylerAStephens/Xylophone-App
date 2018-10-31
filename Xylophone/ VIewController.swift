@@ -8,11 +8,11 @@
 
 import UIKit
 import AVFoundation
-// Added time-based audiovisual media framework for iOS
+// Package that allows us to tap into the audio visual components in the iPhone
 
-class ViewController: UIViewController{
+class ViewController: UIViewController, AVAudioPlayerDelegate{
     
-    var player: AVAudioPlayer?
+    var audioPlayer: AVAudioPlayer!
     //Variable to call audio player
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,21 +22,19 @@ class ViewController: UIViewController{
 
     @IBAction func notePressed(_ sender: UIButton) {
         
-        let url = Bundle.main.url(forResource: "note1", withExtension: "wav")!
-        //Added path for accessing audio file
-        do {
-            player = try AVAudioPlayer(contentsOf: url)
-            guard let player = player else { return }
-            
-            player.prepareToPlay()
-            player.play()
-        } catch let error as NSError {
-            print(error.description)
+      let soundURL = Bundle.main.url(forResource: "note1", withExtension: "wav")
+        // Sound URL path
+        
+        do{
+            audioPlayer = try AVAudioPlayer(contentsOf: soundURL!)
+            // Directory Path of sound file to initialize soundplayer with contents of soundURL
         }
-        // Command for button press to play audio and/or catch errors
-    }
-    
+        catch {
+            print(error)
+            // print any error into console to debug
+        }
+        audioPlayer.play()
   
+    }
 
 }
-
