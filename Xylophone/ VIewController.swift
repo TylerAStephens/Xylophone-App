@@ -7,10 +7,13 @@
 //
 
 import UIKit
+import AVFoundation
+// Added time-based audiovisual media framework for iOS
 
 class ViewController: UIViewController{
     
-
+    var player: AVAudioPlayer?
+    //Variable to call audio player
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -19,8 +22,18 @@ class ViewController: UIViewController{
 
     @IBAction func notePressed(_ sender: UIButton) {
         
-        print(sender.tag)
-        
+        let url = Bundle.main.url(forResource: "note1", withExtension: "wav")!
+        //Added path for accessing audio file
+        do {
+            player = try AVAudioPlayer(contentsOf: url)
+            guard let player = player else { return }
+            
+            player.prepareToPlay()
+            player.play()
+        } catch let error as NSError {
+            print(error.description)
+        }
+        // Command for button press to play audio and/or catch errors
     }
     
   
